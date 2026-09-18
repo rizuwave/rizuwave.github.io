@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Happy Day</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="intro.css?v=3">
+    <!-- =====================================
+        MAPA DE THREE.JS
+    ====================================== -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="intro">
+
+        <div id="introFragmentos"></div>
+        <div id="introEstrellasFondo">
+            <div class="capaEstrellas capa1"></div>
+            <div class="capaEstrellas capa2"></div>
+        </div>
+        <div id="introEstrella">
+            <img
+                src="./assets/estrella.intro.png"
+                alt=""
+            >
+        </div>
+        <div id="introTexto">
+            <h1>
+                Happy birthday number 18th
+            </h1>
+            <p>
+                to my beloved jester
+            </p>
+        </div>
+
+        <div id="introTarjeta">
+
+            <div class="introTarjetaEstrella">
+                ✦
+            </div>
+
+            <p id="introMensaje">
+                Hoy cumples 18 años, y quiero que sepas que
+                cada momento a tu lado ha sido parte de esta
+                historia que seguimos escribiendo juntos.
+                Que este nuevo capítulo esté lleno de risas,
+                aventuras y toda la magia que mereces.
+                Feliz cumpleaños, mi bufón favorito.
+            </p>
+
+            <button id="botonEntrar">
+                Entrar a nuestra galaxia
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="hint">
+        Arrastra para explorar · rueda para zoom
+    </div>
+    
+    <div id="tarjeta" class="oculta">
+
+    <button id="cerrarTarjeta">
+        ×
+    </button>
+
+    <div class="tarjetaNumero">
+        FRAGMENTO <span id="numeroTarjeta">01</span>
+    </div>
+
+    <h2 id="tituloTarjeta">
+        Siempre juntos
+    </h2>
+
+    <p id="textoTarjeta">
+        Hay recuerdos que merecen quedarse
+        suspendidos en el universo.
+    </p>
+
+    <div class="tarjetaEstrella">
+        ✦
+    </div>
+    </div>
+
+    <script src="intro.js?v=3"></script>
+
+    <!-- =====================================
+        THREE.JS
+    ====================================== -->
+
+    <script
+        type="module"
+        src="galaxy.js">
+    </script>
+
+</body>
+
+</html>

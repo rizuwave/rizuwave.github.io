@@ -1,0 +1,695 @@
+/* =====================================
+   INTRODUCCIÓN
+===================================== */
+
+#intro {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #000;
+
+    overflow: hidden;
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transition: opacity 1.2s ease;
+}
+
+#intro.salir {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* =====================================
+   ESTRELLA
+===================================== */
+
+#introEstrella {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 220px;
+    height: 220px;
+
+    transform: translate(-50%, -50%) scale(.15);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    animation:
+        entradaEstrella 1.4s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+#introEstrella img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        brightness(1.05)
+        contrast(1.05);
+
+    animation:
+        respirarEstrella
+        2.2s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes respirarEstrella {
+
+    0%,
+    100% {
+        filter:
+            brightness(1)
+            drop-shadow(
+                0 0 10px
+                rgba(255,255,255,.35)
+            );
+    }
+
+    50% {
+        filter:
+            brightness(1.35)
+            drop-shadow(
+                0 0 32px
+                rgba(255,255,255,.8)
+            );
+    }
+}
+
+@keyframes entradaEstrella {
+
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.15);
+        filter: brightness(.7) drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+    }
+
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+        filter: brightness(1.3) drop-shadow(0 0 26px rgba(255, 255, 255, .7));
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1) drop-shadow(0 0 12px rgba(255, 255, 255, .4));
+    }
+}
+
+
+/* Pequeño pulso antes de explotar (aviso de que algo va a pasar) */
+
+#introEstrella.pulso {
+    animation: pulsoEstrella .45s ease-in-out infinite alternate;
+}
+
+@keyframes pulsoEstrella {
+
+    from {
+        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1) drop-shadow(0 0 12px rgba(255, 255, 255, .4));
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.12);
+        filter: brightness(1.6) drop-shadow(0 0 34px rgba(255, 255, 255, .85));
+    }
+}
+
+
+/* =====================================
+   EXPLOSIÓN — bien grande y notoria
+===================================== */
+
+#introEstrella.explota {
+    animation: explotarEstrella .6s cubic-bezier(.1, .8, .3, 1) forwards !important;
+}
+
+@keyframes explotarEstrella {
+
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+        filter: brightness(1.6) drop-shadow(0 0 30px rgba(255, 255, 255, .9));
+    }
+
+    35% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(2.6);
+        filter: brightness(4) drop-shadow(0 0 90px rgba(255, 255, 255, 1));
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(4.2);
+        filter: brightness(4.5) drop-shadow(0 0 140px rgba(255, 255, 255, 0));
+    }
+}
+
+
+/* Destello blanco central, para que el "boom" se sienta */
+
+.flashIntro {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    transform: translate(-50%, -50%) scale(.2);
+
+    pointer-events: none;
+
+    z-index: 6;
+
+    box-shadow:
+        0 0 40px #fff,
+        0 0 90px #fff,
+        0 0 180px rgba(255, 255, 255, .6);
+
+    animation: destelloExplosion .6s ease-out forwards;
+}
+
+@keyframes destelloExplosion {
+
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(.2);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(7);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(11);
+    }
+}
+
+
+/* =====================================
+   FRAGMENTOS
+===================================== */
+
+#introFragmentos {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.fragmento {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    border-radius: 50%;
+    background: #f3f3f2;
+
+    box-shadow:
+        0 0 8px 1px rgba(255, 255, 255, .9),
+        0 0 18px rgba(255, 255, 255, .5);
+
+    opacity: 0;
+    transform: translate(-50%, -50%);
+
+    animation: volarFragmento 1.1s cubic-bezier(.12, .75, .25, 1) forwards;
+}
+
+@keyframes volarFragmento {
+
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translate(0, 0) scale(1.3);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(.1);
+    }
+}
+
+/* =====================================
+   TEXTO DE INTRODUCCIÓN
+===================================== */
+#introTexto {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width:
+        min(900px, 90%);
+
+    text-align: center;
+
+    pointer-events: none;
+
+    opacity: 1;
+
+    filter: none;
+
+    transition:
+        opacity 1.8s ease,
+        transform 1.8s ease,
+        filter 1.8s ease;
+}
+#introTexto.ocultar {
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(-15px)
+        scale(.98);
+}
+/* ====================================
+   TÍTULO
+===================================== */
+#introTexto h1 {
+    margin: 0;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+    font-size: clamp(1.25rem, 4vw, 2.15rem);
+    font-weight: 400;
+    letter-spacing: .07em;
+    line-height: 1.15;
+    background:
+        linear-gradient(
+            100deg,
+            #151515 0%,
+            #ffffff 20%,
+            #d0d0d0 40%,
+            #777777 60%,
+            #8f1c1c 78%,
+            #e23b3b 100%
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0;
+    transform:
+        translateY(35px)
+        scale(.94);
+    filter:
+        blur(14px)
+        brightness(.7);
+    clip-path:
+        inset(0 100% 0 0);
+}
+/* =====================================
+   SUBTÍTULO
+===================================== */
+#introTexto p {
+
+    margin: 8px 0 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(.75rem, 1.5vw, 1rem);
+
+    letter-spacing:
+        .16em;
+
+    color:
+        rgba(220, 220, 220, .82);
+
+    font-style: italic;
+
+    opacity: 0;
+    transform:
+        translateY(12px);
+
+    clip-path:
+        inset(0 100% 0 0);
+    filter: none;
+}
+/* =====================================
+   ACTIVAR TEXTO
+===================================== */
+#introTexto.mostrar {
+    opacity: 1;
+    transform:
+        translate(-50%, -50%)
+        translateY(0);
+}
+#introTexto.mostrar h1 {
+    animation:
+        revelarTitulo
+        4.4s
+        cubic-bezier(.16, 1, .3, 1)
+        forwards !important;
+}
+#introTexto.mostrar p {
+
+    animation:
+        revelarSubtitulo
+        4.4s
+        cubic-bezier(.16, 1, .3, 1)
+        forwards !important;
+
+    animation-delay:
+        1.8s;
+}
+#introTexto.ocultar {
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(-20px)
+        scale(.98);
+
+    pointer-events: none;
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.4s ease;
+}
+/* =====================================
+   ANIMACIÓN DEL TÍTULO
+===================================== */
+@keyframes revelarTitulo {
+
+    0% {
+
+        opacity: 0;
+
+        clip-path:
+            inset(0 100% 0 0);
+
+        transform:
+            translateY(20px)
+            scale(.96);
+
+        filter:
+            brightness(.5);
+
+        letter-spacing:
+            .22em;
+    }
+
+    25% {
+
+        opacity: .25;
+
+        filter:
+            brightness(.7);
+    }
+
+    50% {
+
+        opacity: .6;
+
+        filter:
+            brightness(.9);
+    }
+
+    75% {
+
+        opacity: .85;
+
+        filter:
+            brightness(1.1);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(0 0 0 0);
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            brightness(1);
+
+        letter-spacing:
+            .08em;
+    }
+}
+@keyframes revelarSubtitulo {
+
+    0% {
+
+        opacity: 0;
+
+        clip-path:
+            inset(0 100% 0 0);
+
+        transform:
+            translateY(12px);
+
+        letter-spacing:
+            .30em;
+    }
+
+    30% {
+
+        opacity: .35;
+
+        clip-path:
+            inset(0 75% 0 0);
+
+        transform:
+            translateY(7px);
+
+        letter-spacing:
+            .25em;
+    }
+
+    60% {
+
+        opacity: .7;
+
+        clip-path:
+            inset(0 35% 0 0);
+
+        transform:
+            translateY(3px);
+
+        letter-spacing:
+            .20em;
+    }
+
+    100% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(0 0 0 0);
+
+        transform:
+            translateY(0);
+
+        letter-spacing:
+            .16em;
+    }
+}
+
+/* =====================================
+   TARJETA DE FELICITACIÓN
+===================================== */
+
+#introTarjeta {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(.94);
+
+    width: min(560px, 88vw);
+    max-height: 82vh;
+    overflow-y: auto;
+
+    padding: 44px 36px 36px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(30, 30, 32, .97),
+        rgba(10, 10, 11, .98)
+    );
+
+    border: 1px solid rgba(211, 58, 58, .35);
+    border-radius: 26px;
+
+    box-shadow: 0 0 60px rgba(150, 20, 20, .25);
+
+    text-align: center;
+    color: #eeeeee;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .9s ease, transform .9s ease;
+}
+
+#introTarjeta.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.introTarjetaEstrella {
+    font-size: 30px;
+    color: #d33a3a;
+    margin-bottom: 16px;
+    text-shadow: 0 0 14px rgba(211, 58, 58, .6);
+}
+
+#introMensaje {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.85;
+    color: rgba(238, 230, 230, .85);
+    margin: 0 0 32px;
+}
+
+#botonEntrar {
+    padding: 15px 36px;
+
+    background: linear-gradient(135deg, #7d1515, #3a0a0a);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 40px;
+
+    color: #f5e7e4;
+    font-size: 15px;
+    font-family: inherit;
+    letter-spacing: .05em;
+
+    cursor: pointer;
+
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+#botonEntrar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(150, 20, 20, .35);
+}
+/* =====================================
+   ESTRELLAS DE FONDO (decorativas)
+===================================== */
+#introEstrellasFondo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: aparecerEstrellasFondo 2s ease forwards;
+}
+@keyframes aparecerEstrellasFondo {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.capaEstrellas {
+    position: absolute;
+    inset: -100px;
+    background-repeat: repeat;
+}
+
+.capa1 {
+    background-image:
+        radial-gradient(0.8px 0.8px at 82px 38px, rgba(255,255,255,0.37), transparent),
+        radial-gradient(0.8px 0.8px at 137px 24px, rgba(255,255,255,0.37), transparent),
+        radial-gradient(0.6px 0.6px at 129px 54px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.6px 0.6px at 17px 61px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.1px 1.1px at 144px 31px, rgba(255,255,255,0.57), transparent),
+        radial-gradient(0.9px 0.9px at 149px 15px, rgba(255,255,255,0.49), transparent),
+        radial-gradient(0.9px 0.9px at 56px 11px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.9px 0.9px at 107px 36px, rgba(255,255,255,0.55), transparent),
+        radial-gradient(0.7px 0.7px at 143px 174px, rgba(255,255,255,0.55), transparent),
+        radial-gradient(0.8px 0.8px at 163px 48px, rgba(255,255,255,0.54), transparent),
+        radial-gradient(0.6px 0.6px at 16px 144px, rgba(255,255,255,0.42), transparent),
+        radial-gradient(0.8px 0.8px at 174px 136px, rgba(255,255,255,0.46), transparent),
+        radial-gradient(0.8px 0.8px at 149px 116px, rgba(255,255,255,0.44), transparent),
+        radial-gradient(1.0px 1.0px at 46px 178px, rgba(255,255,255,0.38), transparent),
+        radial-gradient(0.8px 0.8px at 76px 134px, rgba(255,255,255,0.47), transparent),
+        radial-gradient(0.9px 0.9px at 114px 73px, rgba(255,255,255,0.38), transparent),
+        radial-gradient(0.7px 0.7px at 131px 107px, rgba(255,255,255,0.47), transparent),
+        radial-gradient(0.6px 0.6px at 125px 107px, rgba(255,255,255,0.58), transparent),
+        radial-gradient(1.0px 1.0px at 142px 146px, rgba(255,255,255,0.64), transparent),
+        radial-gradient(0.8px 0.8px at 87px 177px, rgba(255,255,255,0.52), transparent),
+        radial-gradient(1.0px 1.0px at 116px 17px, rgba(255,255,255,0.68), transparent),
+        radial-gradient(0.9px 0.9px at 121px 178px, rgba(255,255,255,0.37), transparent);
+    background-size: 180px 180px;
+    animation: derivaEstrellas 140s linear infinite;
+}
+
+.capa2 {
+    background-image:
+        radial-gradient(1.8px 1.8px at 158px 295px, rgba(255,255,255,0.88), transparent),
+        radial-gradient(1.7px 1.7px at 145px 197px, rgba(255,255,255,0.69), transparent),
+        radial-gradient(1.2px 1.2px at 236px 181px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.6px 1.6px at 30px 111px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.4px 1.4px at 126px 203px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1.4px 1.4px at 41px 85px, rgba(255,255,255,0.77), transparent),
+        radial-gradient(1.7px 1.7px at 70px 220px, rgba(255,255,255,0.66), transparent),
+        radial-gradient(1.6px 1.6px at 212px 183px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.2px 1.2px at 118px 77px, rgba(255,255,255,0.61), transparent),
+        radial-gradient(1.4px 1.4px at 119px 6px, rgba(255,255,255,0.79), transparent),
+        radial-gradient(1.1px 1.1px at 134px 144px, rgba(255,255,255,0.72), transparent),
+        radial-gradient(1.5px 1.5px at 189px 312px, rgba(255,255,255,0.93), transparent),
+        radial-gradient(1.6px 1.6px at 263px 316px, rgba(255,255,255,0.85), transparent),
+        radial-gradient(1.4px 1.4px at 233px 286px, rgba(255,255,255,0.71), transparent);
+    background-size: 320px 320px;
+    animation:
+        derivaEstrellas 220s linear infinite reverse,
+        titilarEstrellas 5s ease-in-out infinite;
+}
+@keyframes derivaEstrellas {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-180px, -180px); }
+}
+
+@keyframes titilarEstrellas {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: .55; }
+}

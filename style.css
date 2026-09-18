@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+
+}
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    cursor: grab;
+}
+body.dragging {
+    cursor: grabbing;
+}
+canvas {
+    display: block;
+}
+#hint {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform:
+        translateX(-50%);
+    z-index: 20;
+    color:
+        rgba(236, 210, 208, 0.52);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    user-select: none;
+    transition:
+        opacity 1.2s ease;
+}
+.frase {
+    position: fixed;
+    z-index: 15;
+    transform:
+        translate(-50%, -50%);
+    padding: 7px 12px;
+    border-radius: 20px;
+    color: #f2dfdc;
+    background:
+        rgba(24, 8, 10, 0.54);
+    border:
+        1px solid rgba(204, 109, 115, 0.28);
+    box-shadow:
+        0 0 18px rgba(120, 35, 50, 0.12);
+    backdrop-filter:
+        blur(6px);
+    font-size: 12px;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+.frase:hover {
+    background:
+        rgba(75, 22, 28, 0.62);
+    border-color:
+        rgba(230, 130, 140, 0.55);
+    box-shadow:
+        0 0 22px rgba(160, 50, 70, 0.20);
+    transform:
+        translate(-50%, -50%)
+        scale(1.08);
+}
+/* ==========================================
+    TARJETA
+========================================== */
+#tarjeta {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform:
+        translate(-50%, -50%);
+    z-index: 100;
+
+    width: min(560px, 90vw);
+    max-height: 82vh;
+    overflow-y: auto;
+
+    padding: 46px 42px 38px;
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(38, 15, 19, 0.97),
+            rgba(11, 7, 9, 0.98)
+        );
+    border:
+        1px solid rgba(214, 120, 125, 0.28);
+    box-shadow:
+        0 0 70px rgba(150, 25, 40, 0.22),
+        0 25px 60px rgba(0, 0, 0, 0.55),
+        inset 0 0 40px rgba(255, 150, 150, 0.03);
+    backdrop-filter:
+        blur(18px);
+
+    color: #f5e7e4;
+
+    animation:
+        aparecerTarjeta .5s cubic-bezier(.22, 1, .36, 1),
+        respirarTarjeta 4.5s ease-in-out 0.5s infinite;
+}
+@keyframes respirarTarjeta {
+    0%, 100% {
+        box-shadow:
+            0 0 70px rgba(150, 25, 40, 0.22),
+            0 25px 60px rgba(0, 0, 0, 0.55),
+            inset 0 0 40px rgba(255, 150, 150, 0.03);
+    }
+    50% {
+        box-shadow:
+            0 0 100px rgba(170, 30, 45, 0.32),
+            0 25px 60px rgba(0, 0, 0, 0.55),
+            inset 0 0 40px rgba(255, 150, 150, 0.05);
+    }
+}
+#tarjeta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 1px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(220, 120, 120, .6),
+            transparent
+        );
+    background-size: 200% 100%;
+    animation:
+        brilloLinea 3.5s ease-in-out infinite;
+}
+@keyframes brilloLinea {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+#tarjeta.oculta {
+    display: none;
+}
+@keyframes aparecerTarjeta {
+    from {
+        opacity: 0;
+        transform:
+            translate(-50%, -47%)
+            scale(.94);
+    }
+    to {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+}
+/* ==========================================
+  CERRAR
+========================================== */
+#cerrarTarjeta {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    background:
+        rgba(255, 255, 255, .05);
+    color:
+        rgba(255, 220, 220, .75);
+    border-radius: 50%;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background .2s ease,
+        transform .3s ease,
+        color .2s ease;
+}
+#cerrarTarjeta:hover {
+    background:
+        rgba(180, 60, 75, .25);
+    color: #fff;
+    transform:
+        rotate(90deg);
+}
+/* ==========================================
+  CONTENIDO
+========================================== */
+.tarjetaNumero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color:
+        rgba(222, 140, 145, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+.tarjetaNumero::before,
+.tarjetaNumero::after {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background:
+        rgba(214, 120, 125, .45);
+}
+#tituloTarjeta {
+    margin-bottom: 20px;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: .01em;
+    color: #f6e5e3;
+    text-shadow:
+        0 0 22px rgba(220, 130, 130, .18);
+}
+#textoTarjeta {
+    color:
+        rgba(241, 222, 219, .8);
+    font-size: 16px;
+    line-height: 1.85;
+}
+.tarjetaEstrella {
+    margin-top: 26px;
+    text-align: center;
+    color:
+        #d89aa0;
+    font-size: 20px;
+    text-shadow:
+        0 0 14px rgba(210, 100, 110, .55);
+    animation:
+        pulsoTarjetaEstrella 2.4s ease-in-out infinite;
+}
+@keyframes pulsoTarjetaEstrella {
+    0%, 100% {
+        opacity: .6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+/* ==========================================
+  RESPONSIVE
+========================================== */
+@media (max-width: 600px) {
+    #hint {
+        bottom: 15px;
+        font-size: 10px;
+    }
+    .frase {
+        font-size: 10px;
+        padding:
+            6px 9px;
+    }
+    #tarjeta {
+        width: 94vw;
+        max-height: 50vh;
+        padding: 32px 26px 28px;
+        border-radius: 20px;
+    }
+    #tituloTarjeta {
+        font-size: 26px;
+    }
+    #textoTarjeta {
+        font-size: 15px;
+    }
+
+}
